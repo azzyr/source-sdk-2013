@@ -2255,10 +2255,10 @@ void CTFPlayerModelPanel::SetupFlexWeights( void )
 
 	LocalFlexController_t i;
 
-	// Decay to neutral
+	// Set to neutral
 	for ( i = LocalFlexController_t(0); i < GetNumFlexControllers(); i++)
 	{
-		SetFlexWeight( i, GetFlexWeight( i ) * 0.95 );
+		SetFlexWeight( i, GetFlexWeight( i ) * 0.0f );
 	}
 
 	// Run scene
