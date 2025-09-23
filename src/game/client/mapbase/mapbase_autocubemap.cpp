@@ -132,7 +132,10 @@ public:
 			}
 
 			// Just do this map
-			m_AutoCubemapMaps.AddToTail( strdup( g_MapName ) );
+			if ( g_MapName )
+			{
+				m_AutoCubemapMaps.AddToTail( strdup( g_MapName ) );
+			}
 		}
 
 		if (autocubemap_hdr_do_both.GetBool())
@@ -145,7 +148,7 @@ public:
 		m_bAutoCubemapActive = true;
 		m_AutoCubemapMapsIndex = 0;
 
-		if (FStrEq( m_AutoCubemapMaps[m_AutoCubemapMapsIndex], g_MapName ))
+		if ( g_MapName && FStrEq( m_AutoCubemapMaps[m_AutoCubemapMapsIndex], g_MapName ) )
 		{
 			// Build cubemaps right here, right now
 			m_bAutoCubemapBuildingCubemaps = true;
@@ -237,12 +240,6 @@ CAutoCubemapSystem	g_AutoCubemapSystem;
 
 CON_COMMAND( autocubemap_init, "Inits autocubemap" )
 {
-	if (gpGlobals->maxClients > 1)
-	{
-		Msg( "Can't run autocubemap in multiplayer\n" );
-		return;
-	}
-
 	if (args.ArgC() <= 1)
 	{
 		Msg("Format: autocubemap_init <file name in the 'cfg' folder>\n");
@@ -254,33 +251,15 @@ CON_COMMAND( autocubemap_init, "Inits autocubemap" )
 
 CON_COMMAND( autocubemap_print, "Prints current autocubemap information" )
 {
-	if (gpGlobals->maxClients > 1)
-	{
-		Msg("Can't run autocubemap in multiplayer\n");
-		return;
-	}
-
 	g_AutoCubemapSystem.PrintState();
 }
 
 CON_COMMAND( autocubemap_clear, "Clears autocubemap stuff" )
 {
-	if (gpGlobals->maxClients > 1)
-	{
-		Msg("Can't run autocubemap in multiplayer\n");
-		return;
-	}
-
 	g_AutoCubemapSystem.Clear();
 }
 
 CON_COMMAND( autocubemap_start, "Begins the autocubemap (it's recommended to check 'autocubemap_print' before running this command)" )
 {
-	if (gpGlobals->maxClients > 1)
-	{
-		Msg("Can't run autocubemap in multiplayer\n");
-		return;
-	}
-
 	g_AutoCubemapSystem.StartAutoCubemap();
 }
